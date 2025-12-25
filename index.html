@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Untuk My Kisah❤️</title>
     <!-- Load Tailwind CSS -->
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <!-- Load Custom Fonts (Gochi Hand for handwritten & Inter for body) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Load Custom Fonts -->
     <style>
-        @import url('[https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;700&display=swap)');
+        @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;700&display=swap');
 
         body {
             font-family: 'Inter', sans-serif;
-            /* Soft background gradient effect */
             background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4f46e5 100%);
-            overflow: hidden; /* Prevents scrolling when the button moves */
+            overflow: hidden;
         }
 
-        /* Custom font for the question, makes it feel personal */
         .font-question {
             font-family: 'Gochi Hand', cursive;
         }
 
-        /* Set up the "No" button to be movable */
         #no-button {
             position: absolute;
             transition: all 0.3s ease-in-out;
-            /* Ensure this button is on top of other elements when moving */
             z-index: 10;
+            cursor: pointer;
         }
 
-        /* The "Yes" button will be on top if they overlap */
         #yes-button {
             position: relative;
             z-index: 20;
@@ -39,34 +36,23 @@
 </head>
 <body class="text-white min-h-screen flex items-center justify-center p-4">
 
-    <!-- Main Content: The Question -->
+    <!-- Main Content -->
     <div id="main-content" class="bg-gray-900 bg-opacity-70 backdrop-blur-lg p-8 md:p-12 rounded-2xl shadow-2xl text-center max-w-lg w-full transition-all duration-500 ease-in-out transform scale-100 opacity-100">
-        <!-- Cute Opening GIF -->
         <img src="https://raw.githubusercontent.com/Rezaofc2/uploader/main/uploads/1766704088324.png"
              alt="GIF pemalu yang lucu"
              class="w-48 h-48 mx-auto rounded-full mb-6 shadow-lg border-4 border-pink-400 object-cover">
 
-        <h1 class="font-question text-4xl md:text-5xl font-bold text-pink-400 mb-6">
-            Heeey kamuuu...
-        </h1>
-        <p class="text-2xl md:text-3xl mb-10 font-question text-gray-200">
-            Saya punya pertanyaan... tapi jangan marah, oke?
-        </p>
-
-        <p class="text-xl md:text-2xl mb-10 font-semibold text-white">
-            Maukah kamu menjadi pacarku? 🥺👉👈
-        </p>
+        <h1 class="font-question text-4xl md:text-5xl font-bold text-pink-400 mb-6">Heeey kamuuu...</h1>
+        <p class="text-2xl md:text-3xl mb-10 font-question text-gray-200">Saya punya pertanyaan... tapi jangan marah, oke?</p>
+        <p class="text-xl md:text-2xl mb-10 font-semibold text-white">Maukah kamu menjadi pacarku? 🥺👉👈</p>
 
         <!-- Button Container -->
-        <!-- Made 'relative' so the "No" button can move within it -->
-        <div class="relative flex flex-col sm:flex-row justify-center items-center gap-4 h-24">
-            <!-- The "Yes" Button -->
+        <div id="button-area" class="relative flex flex-col sm:flex-row justify-center items-center gap-4 h-24">
             <button id="yes-button"
                     class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-110 shadow-lg">
                 SANGAT!
             </button>
 
-            <!-- The "No" Button (The one that moves) -->
             <button id="no-button"
                     class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 shadow-lg"
                     style="left: 55%; transform: translateX(-50%);">
@@ -78,20 +64,16 @@
     <!-- Success Message (Hidden) -->
     <div id="success-message"
          class="hidden bg-gray-900 bg-opacity-70 backdrop-blur-lg p-8 md:p-12 rounded-2xl shadow-2xl text-center max-w-lg w-full transition-all duration-500 ease-in-out transform scale-0 opacity-0">
-        <!-- Success/Love GIF -->
-        <img src="https://raw.githubusercontent.com/Rezaofc2/uploader/main/uploads/1766704285888.png"
+        <!-- NOTE: data-src digunakan agar gambar cinta TIDAK dimuat sampai tombol diklik -->
+        <img id="love-gif"
+             data-src="https://raw.githubusercontent.com/Rezaofc2/uploader/main/uploads/1766704285888.png"
              alt="GIF cinta"
-             class="w-48 h-48 mx-auto rounded-full mb-6 shadow-lg border-4 border-green-400 object-cover">
+             class="w-48 h-48 mx-auto rounded-full mb-6 shadow-lg border-4 border-green-400 object-cover"
+             style="display:none;">
 
-        <h1 class="font-question text-5xl md:text-6xl font-bold text-green-400 mb-6">
-            YAAAAAY!
-        </h1>
-        <p class="text-2xl md:text-3xl font-question text-gray-200 mb-8">
-            Hehe, aku suka banget sama kamu! ❤️
-        </p>
-        <p class="text-lg text-gray-300">
-            (Kirim pesan padaku setelah kamu melihat ini, oke?)
-        </p>
+        <h1 class="font-question text-5xl md:text-6xl font-bold text-green-400 mb-6">YAAAAAY!</h1>
+        <p class="text-2xl md:text-3xl font-question text-gray-200 mb-8">Hehe, aku suka banget sama kamu! ❤️</p>
+        <p class="text-lg text-gray-300">(Kirim pesan padaku setelah kamu melihat ini, oke?)</p>
     </div>
 
     <script>
@@ -99,8 +81,9 @@
         const noButton = document.getElementById('no-button');
         const mainContent = document.getElementById('main-content');
         const successMessage = document.getElementById('success-message');
+        const loveGif = document.getElementById('love-gif');
+        const buttonArea = document.getElementById('button-area');
 
-        // Funny texts for the "No" button
         const noButtonTexts = [
             "No.",
             "Are you sure? :(",
@@ -113,59 +96,78 @@
             "HMMMMM"
         ];
 
-        let yesButtonScale = 1; // Initial scale of the "Yes" button
-        let noButtonTextIndex = 0; // Index for the "No" button text
+        let yesButtonScale = 1;
+        let noButtonTextIndex = 0;
 
-        // When the "Yes" button is clicked
+        // Click "SANGAT!" -> tampilkan success + muat GIF cinta (lazy load)
         yesButton.addEventListener('click', () => {
-            // Hide the main content
+            // Animasi sembunyikan main content
             mainContent.classList.add('scale-0', 'opacity-0');
 
-            // Show the success message after 500ms
+            // Muat gambar cinta hanya saat diperlukan
+            if (loveGif.dataset.src && !loveGif.src) {
+                loveGif.src = loveGif.dataset.src;
+            }
+
+            // Setelah animasi selesai, sembunyikan main dan tampilkan success
             setTimeout(() => {
                 mainContent.classList.add('hidden');
-                successMessage.classList.remove('hidden', 'scale-0', 'opacity-0');
-                successMessage.classList.add('scale-100', 'opacity-100');
-            }, 500);
+                // tampilkan gambar setelah src terpasang
+                loveGif.style.display = 'block';
+                successMessage.classList.remove('hidden');
+                // trigger transition classes
+                setTimeout(() => {
+                    successMessage.classList.remove('scale-0', 'opacity-0');
+                    successMessage.classList.add('scale-100', 'opacity-100');
+                }, 20);
+            }, 450);
         });
 
-        // Function to move the "No" button
+        // Fungsi untuk memindahkan tombol "TIDAK" ke posisi acak di layar
         function moveButton() {
-            // Get the viewport size
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
-
-            // Get the button size
             const buttonWidth = noButton.offsetWidth;
             const buttonHeight = noButton.offsetHeight;
 
-            // Calculate a new random position
-            let newX = Math.random() * (viewportWidth - buttonWidth - (viewportWidth * 0.1));
-            let newY = Math.random() * (viewportHeight - buttonHeight - (viewportHeight * 0.1));
+            // Batasi area supaya tombol tidak keluar layar
+            const paddingX = 20;
+            const paddingY = 80; // beri ruang atas untuk header
+            const maxX = Math.max(0, viewportWidth - buttonWidth - paddingX);
+            const maxY = Math.max(0, viewportHeight - buttonHeight - paddingY);
 
-            newX += (viewportWidth * 0.05);
-            newY += (viewportHeight * 0.05);
-            
-            // Apply the new position
-            noButton.style.position = 'fixed'; 
+            const newX = Math.random() * maxX + paddingX / 2;
+            const newY = Math.random() * maxY + paddingY / 2;
+
+            noButton.style.position = 'fixed';
             noButton.style.left = `${newX}px`;
             noButton.style.top = `${newY}px`;
 
-            // Enlarge the "Yes" button
-            yesButtonScale += 0.2;
+            // Perbesar tombol "SANGAT!" sedikit setiap kali
+            yesButtonScale = Math.min(2.2, yesButtonScale + 0.15);
             yesButton.style.transform = `scale(${yesButtonScale})`;
-            yesButton.style.transition = 'transform 0.3s ease';
+            yesButton.style.transition = 'transform 0.25s ease';
 
-            // Change the "No" button text
+            // Ganti teks tombol "TIDAK"
             noButtonTextIndex = (noButtonTextIndex + 1) % noButtonTexts.length;
             noButton.innerText = noButtonTexts[noButtonTextIndex];
         }
 
-        // Move the button when the mouse hovers over it
+        // Hover dan klik untuk memindahkan (mendukung desktop & mobile)
         noButton.addEventListener('mouseover', moveButton);
-
-        // Move the button when it's clicked (for mobile devices)
         noButton.addEventListener('click', moveButton);
+
+        // Jika layar di-resize, pastikan tombol "TIDAK" tetap terlihat (opsional)
+        window.addEventListener('resize', () => {
+            // jika posisi fixed berada di luar layar, reset ke posisi default
+            const rect = noButton.getBoundingClientRect();
+            if (rect.right < 0 || rect.left > window.innerWidth || rect.top > window.innerHeight || rect.bottom < 0) {
+                noButton.style.position = 'absolute';
+                noButton.style.left = '55%';
+                noButton.style.top = '';
+                noButton.style.transform = 'translateX(-50%)';
+            }
+        });
     </script>
 </body>
 </html>
