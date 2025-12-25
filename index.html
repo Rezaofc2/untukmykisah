@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Untuk My Kisah❤️</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Load Custom Fonts -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Inter:wght@400;700&display=swap');
 
@@ -21,9 +19,9 @@
             font-family: 'Gochi Hand', cursive;
         }
 
-        #no-button {
-            position: absolute;
-            transition: all 0.3s ease-in-out;
+        /* Default tombol NGGA/NO dibuat relatif di dalam container agar tidak terlalu kebawah */
+        #ngga-button, #no-button {
+            transition: all 0.25s ease-in-out;
             z-index: 10;
             cursor: pointer;
         }
@@ -31,40 +29,46 @@
         #yes-button {
             position: relative;
             z-index: 20;
+            transition: transform 0.25s ease;
         }
+
+        /* Saat tombol dipindahkan, kita set ke fixed lewat JS */
     </style>
 </head>
 <body class="text-white min-h-screen flex items-center justify-center p-4">
 
-    <!-- Main Content -->
     <div id="main-content" class="bg-gray-900 bg-opacity-70 backdrop-blur-lg p-8 md:p-12 rounded-2xl shadow-2xl text-center max-w-lg w-full transition-all duration-500 ease-in-out transform scale-100 opacity-100">
         <img src="https://raw.githubusercontent.com/Rezaofc2/uploader/main/uploads/1766704088324.png"
              alt="GIF pemalu yang lucu"
              class="w-48 h-48 mx-auto rounded-full mb-6 shadow-lg border-4 border-pink-400 object-cover">
 
         <h1 class="font-question text-4xl md:text-5xl font-bold text-pink-400 mb-6">Heeey kamuuu...</h1>
-        <p class="text-2xl md:text-3xl mb-10 font-question text-gray-200">Saya punya pertanyaan... tapi jangan marah, oke?</p>
-        <p class="text-xl md:text-2xl mb-10 font-semibold text-white">Maukah kamu menjadi pacarku? 🥺👉👈</p>
+        <p class="text-2xl md:text-3xl mb-6 font-question text-gray-200">Saya punya pertanyaan... tapi jangan marah, oke?</p>
+        <p class="text-xl md:text-2xl mb-6 font-semibold text-white">Maukah kamu menjadi pacarku? 🥺👉👈</p>
 
-        <!-- Button Container -->
-        <div id="button-area" class="relative flex flex-col sm:flex-row justify-center items-center gap-4 h-24">
+        <!-- Button Container: gunakan tinggi otomatis dan center agar tombol tidak terlalu kebawah -->
+        <div id="button-area" class="relative flex flex-col sm:flex-row justify-center items-center gap-4">
             <button id="yes-button"
-                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-110 shadow-lg">
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 transform shadow-lg">
                 SANGAT!
             </button>
 
+            <!-- Tombol NGGA baru, berada di samping SANGAT pada layar lebar -->
+            <button id="ngga-button"
+                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 shadow-lg">
+                NGGA
+            </button>
+
+            <!-- (Opsional) tombol NO lama tetap ada tapi disembunyikan di awal; jika tidak perlu, bisa dihapus -->
             <button id="no-button"
-                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 shadow-lg"
-                    style="left: 55%; transform: translateX(-50%);">
+                    class="hidden bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 shadow-lg">
                 TIDAK.
             </button>
         </div>
     </div>
 
-    <!-- Success Message (Hidden) -->
     <div id="success-message"
          class="hidden bg-gray-900 bg-opacity-70 backdrop-blur-lg p-8 md:p-12 rounded-2xl shadow-2xl text-center max-w-lg w-full transition-all duration-500 ease-in-out transform scale-0 opacity-0">
-        <!-- NOTE: data-src digunakan agar gambar cinta TIDAK dimuat sampai tombol diklik -->
         <img id="love-gif"
              data-src="https://raw.githubusercontent.com/Rezaofc2/uploader/main/uploads/1766704285888.png"
              alt="GIF cinta"
@@ -78,11 +82,11 @@
 
     <script>
         const yesButton = document.getElementById('yes-button');
-        const noButton = document.getElementById('no-button');
+        const nggaButton = document.getElementById('ngga-button');
+        const noButton = document.getElementById('no-button'); // tetap ada jika ingin dipakai
         const mainContent = document.getElementById('main-content');
         const successMessage = document.getElementById('success-message');
         const loveGif = document.getElementById('love-gif');
-        const buttonArea = document.getElementById('button-area');
 
         const noButtonTexts = [
             "No.",
@@ -97,25 +101,20 @@
         ];
 
         let yesButtonScale = 1;
-        let noButtonTextIndex = 0;
+        let nggaTextIndex = 0;
 
-        // Click "SANGAT!" -> tampilkan success + muat GIF cinta (lazy load)
+        // Klik "SANGAT!" -> tampilkan success + muat GIF cinta (lazy load)
         yesButton.addEventListener('click', () => {
-            // Animasi sembunyikan main content
             mainContent.classList.add('scale-0', 'opacity-0');
 
-            // Muat gambar cinta hanya saat diperlukan
             if (loveGif.dataset.src && !loveGif.src) {
                 loveGif.src = loveGif.dataset.src;
             }
 
-            // Setelah animasi selesai, sembunyikan main dan tampilkan success
             setTimeout(() => {
                 mainContent.classList.add('hidden');
-                // tampilkan gambar setelah src terpasang
                 loveGif.style.display = 'block';
                 successMessage.classList.remove('hidden');
-                // trigger transition classes
                 setTimeout(() => {
                     successMessage.classList.remove('scale-0', 'opacity-0');
                     successMessage.classList.add('scale-100', 'opacity-100');
@@ -123,12 +122,12 @@
             }, 450);
         });
 
-        // Fungsi untuk memindahkan tombol "TIDAK" ke posisi acak di layar
-        function moveButton() {
+        // Fungsi untuk memindahkan tombol NGGA ke posisi acak di layar
+        function moveNgga() {
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
-            const buttonWidth = noButton.offsetWidth;
-            const buttonHeight = noButton.offsetHeight;
+            const buttonWidth = nggaButton.offsetWidth;
+            const buttonHeight = nggaButton.offsetHeight;
 
             // Batasi area supaya tombol tidak keluar layar
             const paddingX = 20;
@@ -139,33 +138,37 @@
             const newX = Math.random() * maxX + paddingX / 2;
             const newY = Math.random() * maxY + paddingY / 2;
 
-            noButton.style.position = 'fixed';
-            noButton.style.left = `${newX}px`;
-            noButton.style.top = `${newY}px`;
+            // ubah ke fixed agar bisa bebas bergerak di viewport
+            nggaButton.style.position = 'fixed';
+            nggaButton.style.left = `${newX}px`;
+            nggaButton.style.top = `${newY}px`;
 
-            // Perbesar tombol "SANGAT!" sedikit setiap kali
-            yesButtonScale = Math.min(2.2, yesButtonScale + 0.15);
+            // Ganti teks NGGA dari array
+            nggaTextIndex = (nggaTextIndex + 1) % noButtonTexts.length;
+            nggaButton.innerText = noButtonTexts[nggaTextIndex];
+
+            // Perbesar tombol SANGAT sedikit setiap kali NGGA dipencet
+            yesButtonScale = Math.min(2.2, yesButtonScale + 0.12);
             yesButton.style.transform = `scale(${yesButtonScale})`;
-            yesButton.style.transition = 'transform 0.25s ease';
-
-            // Ganti teks tombol "TIDAK"
-            noButtonTextIndex = (noButtonTextIndex + 1) % noButtonTexts.length;
-            noButton.innerText = noButtonTexts[noButtonTextIndex];
         }
 
-        // Hover dan klik untuk memindahkan (mendukung desktop & mobile)
-        noButton.addEventListener('mouseover', moveButton);
-        noButton.addEventListener('click', moveButton);
+        // Dukung hover (desktop) dan klik/touch (mobile)
+        nggaButton.addEventListener('mouseover', moveNgga);
+        nggaButton.addEventListener('click', moveNgga);
+        nggaButton.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNgga();
+        }, {passive: false});
 
-        // Jika layar di-resize, pastikan tombol "TIDAK" tetap terlihat (opsional)
+        // Jika layar di-resize, pastikan tombol NGGA tetap terlihat; jika keluar layar, reset ke posisi inline
         window.addEventListener('resize', () => {
-            // jika posisi fixed berada di luar layar, reset ke posisi default
-            const rect = noButton.getBoundingClientRect();
+            const rect = nggaButton.getBoundingClientRect();
             if (rect.right < 0 || rect.left > window.innerWidth || rect.top > window.innerHeight || rect.bottom < 0) {
-                noButton.style.position = 'absolute';
-                noButton.style.left = '55%';
-                noButton.style.top = '';
-                noButton.style.transform = 'translateX(-50%)';
+                // reset ke posisi semula (inline di container)
+                nggaButton.style.position = '';
+                nggaButton.style.left = '';
+                nggaButton.style.top = '';
+                nggaButton.style.transform = '';
             }
         });
     </script>
